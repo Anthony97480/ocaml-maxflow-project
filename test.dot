@@ -1,0 +1,7 @@
+digraph mongraph {
+
+    node [shape = circle];
+
+    1 -> 2 [label = "test"];
+
+  }

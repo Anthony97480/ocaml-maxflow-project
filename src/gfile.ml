@@ -111,4 +111,28 @@ let from_file path =
   
   close_in infile ;
   final_graph
-  
+
+
+let f_add_list l element =
+  element::l
+
+let rec get_str_arc (l: 'a arc list) =
+  match l with
+  | [] -> ""
+  | x::rest -> (string_of_int x.src) ^ " -> " ^ (string_of_int x.tgt) ^ "[label = \"" ^ (string_of_int x.lbl) ^ "\" ];\n" ^ get_str_arc rest
+
+let export_id_graph (filename: string) (graph: 'a graph) =
+  let file = open_out filename in
+  let arc_list = e_fold graph f_add_list [] in
+  fprintf file "%s" ("digraph mongraph {\nnode [shape = circle];\n" ^
+    (get_str_arc arc_list) ^
+  "}");
+  close_out file
+
+let export path graph =
+  let file = open_out path in
+  fprintf file "digraph mongraph {\nnode [shape = circle];\n";
+  let _ = e_fold graph (fun count arc -> fprintf file "%d -> %d [label = \"%d\"];\n" arc.src arc.tgt arc.lbl ; count + 1) 0 in
+  fprintf file "}";
+  close_out file;
+  ()

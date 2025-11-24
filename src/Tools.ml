@@ -16,8 +16,8 @@ let gmap (gr: 'a graph) f =
 let add_arc gr id1 id2 n =
   let arc_find = find_arc gr id1 id2 in
   match arc_find with
-  | None -> 
-  | Some arc_opt -> let arc = {src=arc_opt.src; tgt=arc_opt.tgt; lbl=arc_opt.lbl + n} in new_arc gr arc
+  | None -> (let arc = {src=id1; tgt=id2; lbl=n} in new_arc gr arc)
+  | Some arc_opt -> (let arc = {src=arc_opt.src; tgt=arc_opt.tgt; lbl=arc_opt.lbl + n} in new_arc gr arc)
 
 (*Replace _gr and _f by gr and f when you start writing the real function*)
 

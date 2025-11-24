@@ -27,9 +27,13 @@ let () =
 
   (* Open file *)
   let graph = from_file infile in
-
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
-
   ()
 
+let () = export "./test.dot" graph
+
+(*let () =
+  let file = open_out "test.txt" in
+  output_string file "test\n  bonjour";
+  close_out file*)
