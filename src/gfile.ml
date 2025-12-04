@@ -129,10 +129,10 @@ let export_id_graph (filename: string) (graph: 'a graph) =
   "}");
   close_out file
 
-let export path graph =
+let export (path: path) (graph: path graph) =
   let file = open_out path in
   fprintf file "digraph mongraph {\nnode [shape = circle];\n";
-  let _ = e_fold graph (fun count arc -> fprintf file "%d -> %d [label = \"%d\"];\n" arc.src arc.tgt arc.lbl ; count + 1) 0 in
+  let _ = e_fold graph (fun count arc -> fprintf file "%d -> %d [label = \"%s\"];\n" arc.src arc.tgt arc.lbl ; count + 1) 0 in
   fprintf file "}";
   close_out file;
   ()

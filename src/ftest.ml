@@ -24,14 +24,12 @@ let () =
   and _source = int_of_string Sys.argv.(2)
   and _sink = int_of_string Sys.argv.(3)
   in
-
+ 
   (* Open file *)
   let graph = from_file infile in
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
-  ()
-
-let () = export "./test.dot" graph
+  let () = export "./test.dot" graph in ()
 
 (*let () =
   let file = open_out "test.txt" in
