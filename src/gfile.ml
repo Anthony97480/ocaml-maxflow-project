@@ -136,3 +136,13 @@ let export (path: path) (graph: path graph) =
   fprintf file "}";
   close_out file;
   ()
+
+let rec concat_id_list (id_list: id list) (acu: string) =
+  match id_list with
+  | [] -> acu
+  | x::rest -> concat_id_list rest (acu^(string_of_int x)^"/")
+
+let export_file (path: path) (id_list: id list) =
+  let file = open_out path in
+  let string_list = concat_id_list id_list "" in
+  fprintf file "test find_path: %s" (string_list)

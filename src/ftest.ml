@@ -1,4 +1,6 @@
 open Gfile
+open Graph
+open FordF
     
 let () =
 
@@ -29,9 +31,8 @@ let () =
   let graph = from_file infile in
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
+  let id_list = find_path graph 0 12 (out_arcs graph 0) in
+  match id_list with
+  | None -> Printf.printf "raté";
+  | Some id -> let () = export_file "./id list.txt" id in
   let () = export "./test.dot" graph in ()
-
-(*let () =
-  let file = open_out "test.txt" in
-  output_string file "test\n  bonjour";
-  close_out file*)
