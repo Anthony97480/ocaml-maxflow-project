@@ -34,5 +34,9 @@ let () =
   let id_list = find_path graph 0 12 (out_arcs graph 0) in
   match id_list with
   | None -> Printf.printf "raté";
-  | Some id -> let () = export_file "./id list.txt" id in
-  let () = export "./test.dot" graph in ()
+  | Some id -> let () = export_file_list "./id list.txt" id in
+  let test_maxflow = max_sending_flow graph id 0 in
+  match test_maxflow with
+  | 0 -> Printf.printf "raté";
+  | x -> let () = export_file "./flow.txt" x in
+  let () = export "./graph2.dot" graph in ()

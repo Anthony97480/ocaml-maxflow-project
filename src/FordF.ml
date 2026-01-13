@@ -1,5 +1,6 @@
 open Graph
 
+
 (*Même logique qu'en prologue:
 has_path(X, Y):-
   connected(X, Z), //act connecter
@@ -33,15 +34,13 @@ ce code n'est pas bon, il vérifie uniquement les couple (pour la liste [1, 2, 3
 *)
 let rec max_sending_flow (gr: 'a graph) (id_list: id list) (acu: id) =
   match id_list with
-    | [] -> acu
-    | x::y::rest -> (let arc_xy = find_arc gr x y in (
-      match arc_xy with
-      | None -> acu
-      | Some arc -> (if (acu>arc.lbl) then (max_sending_flow gr rest arc.lbl) else (max_sending_flow gr rest acu) )
-      )
+    | [] | [_] -> acu
+    | x::y::rest -> let arc_xy = find_arc gr x y in (
+        match arc_xy with
+          | None -> acu
+          | Some arc -> let capacity = int_of_string arc.lbl in
+            let new_acu = if acu=0 then capacity else min acu capacity in max_sending_flow gr (y::rest) new_acu
     )
-    | _ -> acu
-
     
 (*Fonction incomplète*)
 let ffalgo (gr: 'a graph) (s: id) (e: id) =

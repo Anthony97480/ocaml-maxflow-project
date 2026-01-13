@@ -142,7 +142,11 @@ let rec concat_id_list (id_list: id list) (acu: string) =
   | [] -> acu
   | x::rest -> concat_id_list rest (acu^(string_of_int x)^"/")
 
-let export_file (path: path) (id_list: id list) =
+let export_file_list (path: path) (id_list: id list) =
   let file = open_out path in
   let string_list = concat_id_list id_list "" in
   fprintf file "test find_path: %s" (string_list)
+
+let export_file (path: path) (id: id) =
+  let file = open_out path in
+  fprintf file "test max flow: %s" (string_of_int id)
