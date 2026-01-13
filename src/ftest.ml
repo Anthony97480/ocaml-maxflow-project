@@ -35,7 +35,7 @@ let () =
   match id_list with
   | None -> Printf.printf "raté";
   | Some id -> let () = export_file_list "./id list.txt" id in
-  let test_maxflow = max_sending_flow graph id 0 in
+  let test_maxflow = max_sending_flow graph id max_int in
   match test_maxflow with
   | 0 -> Printf.printf "raté";
   | x -> let () = export_file "./flow.txt" x in
