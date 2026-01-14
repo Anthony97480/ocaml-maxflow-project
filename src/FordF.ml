@@ -41,7 +41,7 @@ let rec max_sending_flow (gr: string graph) (id_list: id list) (acu: id) =
     )
     
 
-let rec send_info (gr: (int * int) graph) (id_list: id list) (msg_size: int) =
+let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
   match id_list with
     | [] | [_] -> gr
     | x::y::rest -> let arc_xy = find_arc gr x y in (
