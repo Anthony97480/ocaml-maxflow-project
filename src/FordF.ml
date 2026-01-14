@@ -1,5 +1,15 @@
 open Graph
 
+
+let string_of_lbl (cap, back) =
+  string_of_int cap ^ "/" ^ string_of_int back
+
+let intpair_of_string (s: string) =
+  match String.split_on_char '/' s with
+    | [cap; back] -> (int_of_string cap, int_of_string back)
+    | [cap] -> (int_of_string cap, 0)
+    | _ -> failwith ("Invalid label format: " ^ s)
+
 (*Même logique qu'en prologue:
 has_path(X, Y):-
   connected(X, Z), //act connecter
@@ -8,7 +18,7 @@ has_path(X, Y):-
 let rec find_path (graph: string graph) (s: id) (e: id) (arc_list: string arc list) (visited: id list) =
   match arc_list with
   | [] -> None
-  | x :: rest when x.lbl = "0" ->
+  | x :: rest when fst (intpair_of_string x.lbl) = 0 ->
       find_path graph s e rest visited
   | x :: rest when List.mem x.tgt visited ->
       find_path graph s e rest visited
@@ -36,7 +46,8 @@ let rec max_sending_flow (gr: string graph) (id_list: id list) (acu: id) =
     | x::y::rest -> let arc_xy = find_arc gr x y in (
         match arc_xy with
           | None -> acu
-          | Some arc -> let capacity = (int_of_string arc.lbl) in
+          | Some arc -> let cap, back = (intpair_of_string arc.lbl) in
+            let capacity = cap in
             let new_acu = if acu=0 then capacity else min acu capacity in max_sending_flow gr (y::rest) new_acu
     )
     
@@ -47,8 +58,9 @@ let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
     | x::y::rest -> let arc_xy = find_arc gr x y in (
       match arc_xy with
         | None -> gr
-        | Some arc -> let new_lbl = ( (int_of_string arc.lbl) - msg_size) in 
-          let update_arc = {src=arc.src; tgt=arc.tgt; lbl=(string_of_int new_lbl)} in 
+        | Some arc -> let cap, back = (intpair_of_string arc.lbl) in
+          let new_lbl = ( cap - msg_size, back + msg_size) in 
+          let update_arc = {src=arc.src; tgt=arc.tgt; lbl=(string_of_lbl new_lbl)} in 
           send_info (new_arc gr update_arc) (y::rest) msg_size)
 
 (*let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
