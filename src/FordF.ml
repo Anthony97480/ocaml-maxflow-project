@@ -57,7 +57,7 @@ let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
 (*Fonction incomplète*)
 let ffalgo (gr: 'a graph) (s: id) (e: id) =
   let arc_list = out_arcs gr s in
-  let id_path = find_path gr s e arc_list in
+  let id_path = find_path gr s e arc_list [s] in
   match id_path with
   | None -> None
   | Some id_list -> (
