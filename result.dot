@@ -1,0 +1,22 @@
+digraph mongraph {
+node [shape = circle];
+10 -> 12 [label = "0"];
+9 -> 10 [label = "0"];
+11 -> 9 [label = "0"];
+8 -> 11 [label = "0"];
+3 -> 8 [label = "0"];
+3 -> 6 [label = "2"];
+0 -> 3 [label = "0"];
+0 -> 1 [label = "0"];
+0 -> 2 [label = "2"];
+6 -> 9 [label = "0"];
+1 -> 6 [label = "0"];
+1 -> 5 [label = "0"];
+1 -> 4 [label = "2"];
+5 -> 10 [label = "0"];
+5 -> 7 [label = "0"];
+7 -> 10 [label = "0"];
+7 -> 12 [label = "2"];
+2 -> 5 [label = "2"];
+4 -> 10 [label = "2"];
+}
