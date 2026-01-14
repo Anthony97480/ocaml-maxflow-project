@@ -54,14 +54,10 @@ let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
           send_info (new_arc gr update_arc) rest msg_size)
 
 
-(*Fonction incomplète*)
-let ffalgo (gr: 'a graph) (s: id) (e: id) =
+  let rec ffalgo (gr: string graph) (s: id) (e: id) =
   let arc_list = out_arcs gr s in
-  let id_path = find_path gr s e arc_list [s] in
-  match id_path with
-  | None -> None
-  | Some id_list -> (
-    match (max_sending_flow gr id_list 0) with
-    | 0 -> None
-    | x -> let flow = x in let graph = send_info gr id_list flow in Some graph
-  )
+  match find_path gr s e arc_list [s] with
+  | None -> gr
+  | Some id_list -> let flow = max_sending_flow gr id_list 0 in
+    if flow = 0 then gr else let new_graph = send_info gr id_list flow in
+      ffalgo new_graph s e
