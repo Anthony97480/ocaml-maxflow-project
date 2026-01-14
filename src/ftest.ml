@@ -31,8 +31,8 @@ let () =
   let graph = from_file infile in
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
-  let new_graph = ffalgo graph 0 12 in
-  let id_list = find_path graph 0 12 (out_arcs graph 0) [0] in
+  let new_graph = ffalgo graph 0 7 in
+  let id_list = find_path graph 0 7 (out_arcs graph 0) [0] in
   match id_list with
   | None -> Printf.printf "raté";
   | Some id -> let () = export_file_list "./id list.txt" id in
