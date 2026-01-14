@@ -64,7 +64,7 @@ let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
         | Some arc_back -> let new_flow = ((int_of_string arc_back.lbl) + msg_size ) in
           let updated_back = { src = y; tgt = x; lbl = string_of_int new_flow } in new_arc gr_flow updated_back
         | None -> let back_arc = { src = y; tgt = x; lbl = string_of_int msg_size } in new_arc gr_flow back_arc) in
-      send_info gr_back (y :: rest) msg_size
+      send_info gr_back rest msg_size
 
 
   let rec ffalgo (gr: string graph) (s: id) (e: id) =
