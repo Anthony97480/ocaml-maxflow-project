@@ -6,8 +6,8 @@ let string_of_lbl (cap, back) =
 
 let intpair_of_string (s: string) =
   match String.split_on_char '/' s with
-    | [cap; back] -> (int_of_string cap, int_of_string back)
-    | [cap] -> (int_of_string cap, 0)
+    | [back; cap] -> (int_of_string back, int_of_string cap)
+    | [cap] -> (0, int_of_string cap)
     | _ -> failwith ("Invalid label format: " ^ s)
 
 (*Même logique qu'en prologue:
@@ -63,23 +63,8 @@ let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
           let update_arc = {src=arc.src; tgt=arc.tgt; lbl=(string_of_lbl new_lbl)} in 
           send_info (new_arc gr update_arc) (y::rest) msg_size)
 
-(*let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
-  match id_list with
-  | [] | [_] -> gr
-  | x :: y :: rest -> let gr_flow = (
-    match find_arc gr x y with
-      | None -> gr
-      | Some arc -> let new_lbl = ((int_of_string arc.lbl) - msg_size) in
-        let updated_arc = { src = x; tgt = y; lbl = (string_of_int new_lbl) } in new_arc gr updated_arc ) in
-    let gr_back = (
-      match find_arc gr_flow y x with
-        | Some arc_back -> let new_flow = ((int_of_string arc_back.lbl) + msg_size ) in
-          let updated_back = { src = y; tgt = x; lbl = string_of_int new_flow } in new_arc gr_flow updated_back
-        | None -> let back_arc = { src = y; tgt = x; lbl = string_of_int msg_size } in new_arc gr_flow back_arc) in
-      send_info gr_back (y :: rest) msg_size*)
 
-
-  let rec ffalgo (gr: string graph) (s: id) (e: id) =
+let rec ffalgo (gr: string graph) (s: id) (e: id) =
   let arc_list = out_arcs gr s in
   match find_path gr s e arc_list [s] with
   | None -> gr
