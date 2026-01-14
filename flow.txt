@@ -1,1 +1,1 @@
-test max flow: 2
+test max flow: 1
