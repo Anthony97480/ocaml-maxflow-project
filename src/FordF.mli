@@ -6,4 +6,4 @@ val find_path: string graph -> id -> id -> string arc list -> id list -> id list
 
 val max_sending_flow: string graph -> id list -> id -> id
 
-val ffalgo: string graph -> id -> id -> string graph option
+val ffalgo: string graph -> id -> id -> string graph
