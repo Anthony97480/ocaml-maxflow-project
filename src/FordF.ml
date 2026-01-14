@@ -14,7 +14,7 @@ let rec find_path (graph: 'a graph) (s: id) (e: id) (arc_list: 'a arc list) (vis
       find_path graph s e rest visited
   | x :: rest when List.mem x.tgt visited ->
       find_path graph s e rest visited
-  | x :: rest when x.tgt = e ->
+  | x :: _ when x.tgt = e ->
       Some (s::x.tgt::[])
   | x :: rest ->
       match find_path graph x.tgt e (out_arcs graph x.tgt) (x.tgt :: visited) with
