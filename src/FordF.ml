@@ -10,12 +10,14 @@ has_path(X, Y):-
 let rec find_path (graph: 'a graph) (s: id) (e: id) (arc_list: 'a arc list) =
   match arc_list with
   | [] -> None
-  | x::rest -> (*let int_lbl = int_of_string x.lbl in*) 
-     if (x.tgt=e) then Some (s::x.tgt::[]) else (
-    match (find_path graph x.tgt e (out_arcs graph x.tgt)) with
-    | None -> find_path graph s e rest 
-    | Some paths -> Some (s::paths)
-  )
+  | x::rest -> let int_lbl = int_of_string x.lbl in
+    if (int_lbl=0) then find_path graph s e rest else ( 
+      if (x.tgt=e) then Some (s::x.tgt::[]) else (
+        match (find_path graph x.tgt e (out_arcs graph x.tgt)) with
+          | None -> find_path graph s e rest 
+          | Some paths -> Some (s::paths)
+      )
+    )
 
 
 (*
