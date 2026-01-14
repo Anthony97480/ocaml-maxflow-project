@@ -7,18 +7,21 @@ has_path(X, Y):-
   connected(X, Z), //act connecter
   has_path(Z, Y).
 *)
-let rec find_path (graph: 'a graph) (s: id) (e: id) (arc_list: 'a arc list) =
+let rec find_path (graph: 'a graph) (s: id) (e: id) (arc_list: 'a arc list) (visited: id list) =
   match arc_list with
   | [] -> None
-  | x::rest -> let int_lbl = int_of_string x.lbl in
-    if (int_lbl=0) then find_path graph s e rest else ( 
-      if (x.tgt=e) then Some (s::x.tgt::[]) else (
-        match (find_path graph x.tgt e (out_arcs graph x.tgt)) with
-          | None -> find_path graph s e rest 
-          | Some paths -> Some (s::paths)
-      )
-    )
-
+  | x :: rest when x.lbl = 0 ->
+      find_path graph s e rest visited
+  | x :: rest when List.mem x.tgt visited ->
+      find_path graph s e rest visited
+  | x :: rest when x.tgt = e ->
+      Some (s::x.tgt::[])
+  | x :: rest ->
+      match find_path graph x.tgt e (out_arcs graph x.tgt) (x.tgt :: visited) with
+      | None ->
+          find_path graph s e rest visited
+      | Some paths ->
+          Some (s :: paths)
 
 (*
   pour tous: les sommet du graphique
