@@ -5,7 +5,7 @@ has_path(X, Y):-
   connected(X, Z), //act connecter
   has_path(Z, Y).
 *)
-let rec find_path (graph: 'a graph) (s: id) (e: id) (arc_list: 'a arc list) (visited: id list) =
+let rec find_path (graph: string graph) (s: id) (e: id) (arc_list: string arc list) (visited: id list) =
   match arc_list with
   | [] -> None
   | x :: rest when x.lbl = "0" ->
@@ -30,18 +30,18 @@ let rec find_path (graph: 'a graph) (s: id) (e: id) (arc_list: 'a arc list) (vis
   augmenter le flow de la valeur envoyer sur ce chemin pour ce sommet
 
 *)
-let rec max_sending_flow (gr: 'a graph) (id_list: id list) (acu: id) =
+let rec max_sending_flow (gr: string graph) (id_list: id list) (acu: id) =
   match id_list with
     | [] | [_] -> acu
     | x::y::rest -> let arc_xy = find_arc gr x y in (
         match arc_xy with
           | None -> acu
-          | Some arc -> let capacity = int_of_string arc.lbl in
+          | Some arc -> let capacity = (int_of_string arc.lbl) in
             let new_acu = if acu=0 then capacity else min acu capacity in max_sending_flow gr (y::rest) new_acu
     )
     
 
-let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
+let rec send_info (gr: (int * int) graph) (id_list: id list) (msg_size: int) =
   match id_list with
     | [] | [_] -> gr
     | x::y::rest -> let arc_xy = find_arc gr x y in (
