@@ -10,7 +10,7 @@ has_path(X, Y):-
 let rec find_path (graph: 'a graph) (s: id) (e: id) (arc_list: 'a arc list) (visited: id list) =
   match arc_list with
   | [] -> None
-  | x :: rest when x.lbl = 0 ->
+  | x :: rest when x.lbl = "0" ->
       find_path graph s e rest visited
   | x :: rest when List.mem x.tgt visited ->
       find_path graph s e rest visited
