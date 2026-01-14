@@ -46,7 +46,7 @@ let rec max_sending_flow (gr: string graph) (id_list: id list) (acu: id) =
     | x::y::rest -> let arc_xy = find_arc gr x y in (
         match arc_xy with
           | None -> acu
-          | Some arc -> let cap, back = (intpair_of_string arc.lbl) in
+          | Some arc -> let cap, _ = (intpair_of_string arc.lbl) in
             let capacity = cap in
             let new_acu = if acu=0 then capacity else min acu capacity in max_sending_flow gr (y::rest) new_acu
     )
