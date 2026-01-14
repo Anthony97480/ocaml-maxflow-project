@@ -40,5 +40,5 @@ let () =
   match test_maxflow with
   | 0 -> Printf.printf "raté";
   | x -> let () = export_file "./flow.txt" x in
-  let () = export "./new_graph2.dot" new_graph in
-  let () = export "./graph2.dot" graph in ()
+  let () = export "./new_graph10.dot" new_graph in
+  let () = export "./graph10.dot" graph in ()
