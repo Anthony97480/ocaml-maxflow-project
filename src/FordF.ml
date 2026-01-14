@@ -1,7 +1,5 @@
 open Graph
 
-(*&& (int_lbl<>0)*)
-
 (*Même logique qu'en prologue:
 has_path(X, Y):-
   connected(X, Z), //act connecter
