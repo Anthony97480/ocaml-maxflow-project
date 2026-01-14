@@ -31,14 +31,6 @@ let () =
   let graph = from_file infile in
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
-  let new_graph = ffalgo graph 0 7 in
-  let id_list = find_path graph 0 7 (out_arcs graph 0) [0] in
-  match id_list with
-  | None -> Printf.printf "raté";
-  | Some id -> let () = export_file_list "./id list.txt" id in
-  let test_maxflow = max_sending_flow graph id max_int in
-  match test_maxflow with
-  | 0 -> Printf.printf "raté";
-  | x -> let () = export_file "./flow.txt" x in
-  let () = export "./new_graph10.dot" new_graph in
-  let () = export "./graph10.dot" graph in ()
+  let result_graph = ffalgo graph _source _sink in
+  let () = export "./result_graph2.dot" result_graph in
+  let () = export "./graph2.dot" graph in ()

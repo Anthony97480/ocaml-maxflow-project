@@ -41,7 +41,7 @@ let rec max_sending_flow (gr: 'a graph) (id_list: id list) (acu: id) =
     )
     
 
-let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
+(*let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
   match id_list with
     | [] | [_] -> gr
     | x::y::rest -> let arc_xy = find_arc gr x y in (
@@ -49,7 +49,22 @@ let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
         | None -> gr
         | Some arc -> let new_lbl = ( (int_of_string arc.lbl) - msg_size) in 
           let update_arc = {src=arc.src; tgt=arc.tgt; lbl=(string_of_int new_lbl)} in 
-          send_info (new_arc gr update_arc) rest msg_size)
+          send_info (new_arc gr update_arc) rest msg_size)*)
+
+let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
+  match id_list with
+  | [] | [_] -> gr
+  | x :: y :: rest -> let gr_flow = (
+    match find_arc gr x y with
+      | None -> gr
+      | Some arc -> let new_lbl = ((int_of_string arc.lbl) - msg_size) in
+        let updated_arc = { src = x; tgt = y; lbl = (string_of_int new_lbl) } in new_arc gr updated ) in
+    let gr_retour = (
+      match find_arc gr_flow y x with
+        | Some arc_retour -> let new_flow = ((int_of_string arc_back.lbl) + msg_size ) in
+          let updated_back = { src = y; tgt = x; lbl = string_of_int new_flow } in new_arc gr_flow updated_back
+        | None -> let back_arc = { src = y; tgt = x; lbl = string_of_int msg_size } in new_arc gr_flow back_arc in
+      send_info gr_retour (y :: rest) msg_size)
 
 
   let rec ffalgo (gr: string graph) (s: id) (e: id) =
