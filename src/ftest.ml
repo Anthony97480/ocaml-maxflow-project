@@ -32,5 +32,5 @@ let () =
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
   let result_graph = ffalgo graph _source _sink in
-  let () = export "./result_graph2.dot" result_graph in
+  let () = export outfile result_graph in
   let () = export "./graph2.dot" graph in ()
