@@ -58,7 +58,7 @@ let rec send_info (gr: string graph) (id_list: id list) (msg_size: int) =
     match find_arc gr x y with
       | None -> gr
       | Some arc -> let new_lbl = ((int_of_string arc.lbl) - msg_size) in
-        let updated_arc = { src = x; tgt = y; lbl = (string_of_int new_lbl) } in new_arc gr updated ) in
+        let updated_arc = { src = x; tgt = y; lbl = (string_of_int new_lbl) } in new_arc gr updated_arc ) in
     let gr_retour = (
       match find_arc gr_flow y x with
         | Some arc_retour -> let new_flow = ((int_of_string arc_back.lbl) + msg_size ) in
